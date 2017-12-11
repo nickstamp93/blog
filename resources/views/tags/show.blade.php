@@ -11,8 +11,15 @@
                 <small>{{ $tag->posts()->count() }} posts</small>
             </h1>
         </div>
-        <div class="col-md-2 offset-md-2">
-            <a href="{{ route('tags.edit' , $tag->id) }}" class="btn btn-primary float-right btn-block btn-h1-margin">Edit</a>
+        <div class="col-md-2">
+            <a href="{{ route('tags.edit' , $tag->id) }}" class="btn btn-primary btn-block btn-h1-margin">Edit</a>
+        </div>
+        <div class="col-md-2">
+            <form method="POST" action="{{ route('tags.destroy', $tag->id) }}">
+                {{ method_field('DELETE') }}
+                <input type="submit" value="Delete" class="btn btn-danger btn-block btn-h1-margin">
+                <input type="hidden" name="_token" value="{{ Session::token() }}">
+            </form>
         </div>
     </div>
 

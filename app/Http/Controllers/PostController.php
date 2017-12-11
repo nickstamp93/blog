@@ -26,7 +26,7 @@ class PostController extends Controller
     public function index()
     {
         // create a variable and store all blog posts in it
-        $posts = Post::orderBy('id', 'desc')->paginate(5);
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
 
         // return a view and pass in the created variable
         return view('posts.index')->withPosts($posts);
@@ -39,7 +39,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
         $categories = Category::all();
 
         $tags = Tag::all();
@@ -160,11 +159,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
         $post = Post::find($id);
 
-        $post->delete();
+        // delete every post_tag row connecting this post with a tag
+        $post->tags()->detach();
 
+        // delete post
+        $post->delete();
+        
         Session::flash('success', 'The post was deleted!');
 
         return redirect()->route('posts.index');
