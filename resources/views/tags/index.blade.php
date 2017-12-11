@@ -1,12 +1,12 @@
 @extends('main')
 
-@section('title','| Categories')
+@section('title','| Tags')
 
 @section('content')
 
     <div class="row">
         <div class="col-md-8">
-            <h1>Categories</h1>
+            <h1>Tags</h1>
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -16,24 +16,24 @@
 
                 </thead>
                 <tbody>
-                @foreach($categories as $category)
+                @foreach($tags as $tag)
                     <tr>
-                        <th>{{ $category->id }}</th>
-                        <td>{{ $category->name }}</td>
+                        <th>{{ $tag->id }}</th>
+                        <td>{{ $tag->name }}</td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-            {!! $categories->links() !!}
+            {!! $tags->links() !!}
         </div>
         <div class="col-md-3">
             <div class="card">
-                <div class="card-header">New Category</div>
+                <div class="card-header">New Tag</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('categories.store') }}" data-parsley-validate>
+                    <form method="POST" action="{{ route('tags.store') }}" data-parsley-validate>
                         <div class="form-group">
                             <label name="name">Name:</label>
-                            <input id="name" name="name" class="form-control" required maxlength="50" minlength="5">
+                            <input id="name" name="name" class="form-control" required maxlength="50" minlength="3">
                         </div>
                         <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block">
                         <input type="hidden" name="_token" value="{{ Session::token() }}">

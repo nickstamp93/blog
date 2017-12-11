@@ -27,6 +27,9 @@ Route::resource('posts','PostController');
 // we won't use a separate create view, so no route should be listed
 Route::resource('categories','CategoryController', ['except' => ['create']]);
 
+// we won't use a separate create view, so no route should be listed
+Route::resource('tags','TagController', ['except' => ['create']]);
+
 Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout' );

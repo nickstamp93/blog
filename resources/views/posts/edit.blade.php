@@ -2,11 +2,15 @@
 
 @section('title','| Edit Blog Post')
 
+@section('stylesheets')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 
     <div class="row">
         <div class="col-md-8">
-            <form method="POST" action="{{ route('posts.update', $post->id) }}">
+            <form method="POST" action="{{ route('posts.update', $post->id) }}" data-parsley-validate>
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <div class="form-group">
@@ -24,6 +28,14 @@
                     <select class="form-control" name="category_id">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ $post->category->id == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label name="tags">Tags:</label>
+                    <select class="form-control tags-multi-select" name="tags[]" multiple="multiple">
+                        @foreach($tags as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -48,8 +60,6 @@
                                class="btn btn-danger btn-block">Cancel</a>
                         </div>
                         <div class="col-sm-6">
-                            {{--<a href="{{ route('posts.update', $post->id) }}" class="btn btn-success btn-block">Save
-                                Changes</a>--}}
                             <button type="submit" class="btn btn-success btn-block">Save Changes</button>
                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </div>
@@ -63,35 +73,20 @@
 
 @endsection
 
-{{--
-<form method="POST" action="{{ route('posts.update', $post->id) }}">
-    <div class="form-group">
-        <label for="title">Title:</label>
-        <textarea type="text" class="form-control input-lg" id="title" name="title" rows="1" style="resize:none;">{{ $post->title }}</textarea>
-    </div>
-    <div class="form-group">
-        <label for="body">Body:</label>
-        <textarea type="text" class="form-control input-lg" id="body" name="body" rows="10">{{ $post->body }}</textarea>
-    </div>
-    </div>
-    <div class="col-md-4">
-        <div class="well">
-            <dl class="dl-horizontal">
-                <dt>Created at:</dt>
-                <dd>{{ date('M j, Y h:i:sa', strtotime($post->created_at)) }}</dd>
-            </dl>
+@section('scripts')
+    {{--<script href="../js/select2.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
-            <dl class="dl-horizontal">
-                <dt>Last updated:</dt>
-                <dd>{{ date('M j, Y h:i:sa', strtotime($post->updated_at)) }}</dd>
-            </dl>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-danger btn-block">Back</a>
-                </div>
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-success btn-block">Save</button>
-                    <input type="hidden" name="_token" value="{{ Session::token() }}">
-    {{ method_field('PUT') }}
-</form>﻿--}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // init select2 plugin
+            $('.tags-multi-select').select2();
+
+            //get the current tags and set them selected
+            $('.tags-multi-select').select2().val({!! json_encode($post->tags()->allRelatedIds()) !!}).trigger('change');
+
+
+        });
+    </script>
+@endsection

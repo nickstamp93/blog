@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -41,7 +42,9 @@ class PostController extends Controller
         //
         $categories = Category::all();
 
-        return view('posts.create')->withCategories($categories);
+        $tags = Tag::all();
+
+        return view('posts.create')->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -52,6 +55,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         // validate data (is all data acceptable???)
         $this->validate($request, array(
             'title' => 'required|max:180',
@@ -68,6 +72,10 @@ class PostController extends Controller
         $post->body = $request->body;
 
         $post->save();
+
+        // this is the way to add all post-tag pairs in the intermediary table post_tag
+        // we pass true because on update we want to keep the previous associations (which are empty anyway)
+        $post->tags()->sync($request->tags, false);
 
         Session::flash('success', 'Blog post created successfully');
 
@@ -100,8 +108,10 @@ class PostController extends Controller
 
         $categories = Category::all();
 
+        $tags = Tag::all();
+
         // return an edit view and pass the post variable
-        return view('posts.edit')->withPost($post)->withCategories($categories);
+        return view('posts.edit')->withPost($post)->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -130,6 +140,10 @@ class PostController extends Controller
         $post->body = $request->input('body');
 
         $post->save();
+
+        // this is the way to add all post-tag pairs in the intermediary table post_tag
+        // we pass true because on update we want to delete the previous associations
+        $post->tags()->sync($request->tags, true);
 
         // set flash data with success message
         Session::flash('success', 'Blog post changes saved');

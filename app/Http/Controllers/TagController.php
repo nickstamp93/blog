@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class CategoryController extends Controller
+class TagController extends Controller
 {
     public function __construct()
     {
@@ -24,10 +24,9 @@ class CategoryController extends Controller
     {
         // display a view of all of our categories
         // along with a form to create a new category
-        $categories = Category::orderBy('name', 'asc')->paginate(10);
+        $tags = Tag::orderBy('name', 'asc')->paginate(10);
 
-        return view('categories.index')->withCategories($categories);
-
+        return view('tags.index')->withTags($tags);
     }
 
     /**
@@ -38,22 +37,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
         // validate data (is all data acceptable???)
         $this->validate($request, array(
-            'name' => 'required|min:5|max:50'
+            'name' => 'required|min:3|max:50'
         ));
 
         // store into database
-        $category = new Category;
-        $category->name = $request->name;
+        $tag = new Tag;
+        $tag->name = $request->name;
 
-        $category->save();
+        $tag->save();
 
-        Session::flash('success', 'Category created successfully');
+        Session::flash('success', 'Tag created successfully');
 
         // redirect to another page
-        return redirect()->route('categories.index', $category->id);
+        return redirect()->route('tags.index', $tag->id);
     }
 
     /**

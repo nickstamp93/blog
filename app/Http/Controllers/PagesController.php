@@ -15,7 +15,8 @@ class PagesController extends Controller
         # compile or process data from the model if needed
         # pass data to the correct view
 
-        $posts = Post::orderBy('created_at','desc')->limit(5)->get();
+//        $posts = Post::orderBy('created_at','desc')->limit(5)->get();
+        $posts = Post::paginate(5);
 
         return view('pages.welcome')->withPosts($posts);
     }

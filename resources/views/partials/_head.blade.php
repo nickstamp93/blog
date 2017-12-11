@@ -14,6 +14,6 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="http://localhost:8000/css/styles.css">
 
-    @yield('styles')
+    @yield('stylesheets')
 
 </head>

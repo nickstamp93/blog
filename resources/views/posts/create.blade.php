@@ -2,10 +2,8 @@
 
 @section('title', 'Create new post')
 
-@section('styles')
-
-    <link rel="stylesheet" href="../css/parsley.css" type="text/css">
-
+@section('stylesheets')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -14,7 +12,7 @@
         <div class="col-md-8 offset-md-2">
             <h1>Create New Post</h1>
             <hr>
-            <form method="POST" action="{{ route('posts.store') }}" data-parsley-validate>
+            <form method="POST" action="{{ route('posts.store') }}">
                 <div class="form-group">
                     <label name="title">Title:</label>
                     <input id="title" name="title" class="form-control" required maxlength="180">
@@ -32,6 +30,14 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label name="tags">Tags:</label>
+                    <select class="form-control tags-multi-select" name="tags[]" multiple="multiple">
+                        @foreach($tags as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label name="body">Post Body:</label>
                     <textarea id="body" name="body" rows="10" class="form-control" required></textarea>
                 </div>
@@ -44,5 +50,12 @@
 @endsection
 
 @section('scripts')
-    <script href="../js/parsley.min.js"></script>
+    {{--<script href="../js/select2.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.tags-multi-select').select2();
+        });
+    </script>
 @endsection

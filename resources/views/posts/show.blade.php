@@ -9,6 +9,15 @@
             <h1>{{ $post->title }}</h1>
 
             <p>{{ $post->body }}</p>
+
+            <hr>
+            <div class="tags">
+                @foreach($post->tags as $tag)
+                    <span class="badge badge-secondary">{{ $tag->name }}</span>
+                @endforeach
+            </div>
+
+
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -16,7 +25,9 @@
                     <dl class="row dl-horizontal">
                         <dt class="col-sm-5">Url</dt>
                         {{--<dd class="col-sm-7"><a href="{{ url('blog/'.$post->slug) }}">{{ url($post->slug) }}</a></dd>--}}
-                        <dd class="col-sm-7"><a href="{{ route('blog.single',$post->slug) }}">{{ route('blog.single',$post->slug) }}</a></dd>
+                        <dd class="col-sm-7"><a
+                                    href="{{ route('blog.single',$post->slug) }}">{{ route('blog.single',$post->slug) }}</a>
+                        </dd>
                         <dt class="col-sm-5">Created at</dt>
                         <dd class="col-sm-7">{{ date('M j, Y h:ia',strtotime($post->created_at)) }}</dd>
                         <dt class="col-sm-5">Last update</dt>
@@ -33,13 +44,15 @@
                                 {{ method_field('DELETE') }}
                                 <input type="submit" value="Delete" class="btn btn-danger btn-block">
                                 <input type="hidden" name="_token" value="{{ Session::token() }}">
-                            </form>﻿
+                            </form>
+                            ﻿
                             {{--<a href="{{ route('posts.destroy', $post->id) }}" class="btn btn-danger btn-block">Delete</a>--}}
                         </div>
                         <div class="col-sm-12">
                             <a href="{{ route('posts.index')}}" class="btn btn-secondary btn-block"><< All Posts</a>
                         </div>
-                    </div>﻿
+                    </div>
+                    ﻿
                 </div>
             </div>
         </div>

@@ -27,6 +27,7 @@
                         @if (Auth::check())
                             <a class="dropdown-item" href="{{ route('posts.index') }}">My Posts</a>
                             <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
+                            <a class="dropdown-item" href="{{ route('tags.index') }}">Tags</a>
                             <div role="separator" class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"> Logout </a>
                         @else
