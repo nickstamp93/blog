@@ -19,14 +19,14 @@
                 @foreach($tags as $tag)
                     <tr>
                         <th>{{ $tag->id }}</th>
-                        <td>{{ $tag->name }}</td>
+                        <td><a href="{{ route('tags.show' , $tag->id) }}">{{ $tag->name }}</a></td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-            {!! $tags->links() !!}
+            {{--{!! $tags->links() !!}--}}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">New Tag</div>
                 <div class="card-body">
