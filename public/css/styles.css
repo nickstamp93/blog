@@ -1,0 +1,17 @@
+body {
+     padding-top: 72px;
+ }
+.btn-h1-margin{
+    margin-top: 8px;
+}
+.footer-margin-top{
+    margin-top: 20px;
+}
+.pagination {
+    justify-content: center;
+}
+@media (min-width: 992px) {
+    body {
+        padding-top: 72px;
+    }
+}
