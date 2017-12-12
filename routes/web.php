@@ -27,6 +27,8 @@ Route::resource('posts','PostController');
 // we won't use a separate create view, so no route should be listed
 Route::resource('categories','CategoryController', ['except' => ['create']]);
 
+Route::post('comments/{post_id}',['as' => 'comments.store' , 'uses' => 'CommentsController@store']);
+
 // we won't use a separate create view, so no route should be listed
 Route::resource('tags','TagController', ['except' => ['create']]);
 

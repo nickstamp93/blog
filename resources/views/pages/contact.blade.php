@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-8 offset-md-2">
             <h1 class="my-4">Contact me
                 <hr>
                 <form>

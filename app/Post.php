@@ -19,4 +19,8 @@ class Post extends Model
         // "key of the join model in the intermediary table" ,)
         return $this->belongsToMany('App\Tag','post_tag','post_id','tag_id');
     }
+
+    public function comments(){
+        return $this->hasMany('App\Comment');
+    }
 }
