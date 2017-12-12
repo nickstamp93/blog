@@ -28,6 +28,9 @@ Route::resource('posts','PostController');
 Route::resource('categories','CategoryController', ['except' => ['create']]);
 
 Route::post('comments/{post_id}',['as' => 'comments.store' , 'uses' => 'CommentsController@store']);
+Route::get('comments/{id}/edit',['as' => 'comments.edit' , 'uses' => 'CommentsController@edit']);
+Route::put('comments/{id}',['as' => 'comments.update' , 'uses' => 'CommentsController@update']);
+Route::delete('comments/{id}',['as' => 'comments.destroy' , 'uses' => 'CommentsController@destroy']);
 
 // we won't use a separate create view, so no route should be listed
 Route::resource('tags','TagController', ['except' => ['create']]);

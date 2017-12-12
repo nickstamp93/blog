@@ -24,10 +24,10 @@
                 <tr>
                     <th>#</th>
                     <th>Title</th>
-                    <th>Body</th>
+                    <th width="250px">Body</th>
                     <th>Created at</th>
                     <th>Updated at</th>
-                    <th></th>
+                    <th width="120px"></th>
                 </tr>
 
                 </thead>

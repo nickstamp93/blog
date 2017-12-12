@@ -5,28 +5,17 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function __construct()
     {
-        //
+        // if a user is not logged in, should not be able to access this controller
+        // so the middleware protects it
+        $this->middleware('auth',['except' => 'store']);
     }
 
     /**
@@ -41,8 +30,6 @@ class CommentsController extends Controller
 
         // validate data (is all data acceptable???)
         $this->validate($request, array(
-//            'name' => 'required|max:180',
-//            'email' => 'required|email',
             'comment' => 'required|min:5|max:2000'
         ));
 
@@ -50,8 +37,13 @@ class CommentsController extends Controller
 
         $comment = new Comment;
 
-        $comment->name = "anonymous";
-        $comment->email = "anonymous@gmail.com";
+        if (Auth::check()){
+            $comment->name = Auth::user()->name;
+            $comment->email = Auth::user()->email;
+        }else{
+            $comment->name = "anonymous";
+            $comment->email = "anonymous@gmail.com";
+        }
         $comment->comment = $request->comment;
         $comment->post()->associate($post);
 
@@ -65,17 +57,6 @@ class CommentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -83,7 +64,9 @@ class CommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+
+        return view('comments.edit')->withComment($comment);
     }
 
     /**
@@ -95,7 +78,21 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, array(
+            'comment' => 'required|min:5|max:2000'
+        ));
+
+        $comment = Comment::find($id);
+
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        Session::flash('success', 'Comment updated');
+
+        // redirect to another page
+        return redirect()->route('posts.show', $comment->post->id);
+
+
     }
 
     /**
@@ -107,5 +104,15 @@ class CommentsController extends Controller
     public function destroy($id)
     {
         //
+        $comment = Comment::find($id);
+
+        $post_id = $comment->post->id;
+
+        $comment->delete();
+
+        Session::flash('success', 'The comment was deleted!');
+
+        // redirect to another page
+        return redirect()->route('posts.show', $post_id);
     }
 }

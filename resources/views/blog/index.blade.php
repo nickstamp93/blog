@@ -1,6 +1,5 @@
 @extends('main')
 
-
 @section('title','| Blog')
 
 @section('content')
@@ -15,7 +14,6 @@
             </div>
             <div class="card-footer text-muted">
                 Posted on {{ date('M d, Y',strtotime($post->created_at)) }}
-                {{--<a href="#">Start Bootstrap</a>--}}
             </div>
         </div>
     @endforeach
@@ -27,7 +25,5 @@
             </div>
         </div>
     </div>
-
-
 
 @endsection

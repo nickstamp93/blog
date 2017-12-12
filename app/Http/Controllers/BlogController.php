@@ -11,7 +11,7 @@ class BlogController extends Controller
     public function getIndex(){
         $posts = Post::paginate(2);
 
-        return view('blog.index')->withPosts($posts);
+        return view('./blog.index')->withPosts($posts);
     }
 
     //
