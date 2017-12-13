@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label name="featured_image" for="featured_image">Featured Image:</label>
-                    <input type="file" class="form-control-file" id="featured_image" name="featured_image">
+                    <input type="file" class="form-control-file" id="featured_image" name="featured_image" required>
                 </div>
                 <div class="form-group">
                     <label name="body">Post Body:</label>

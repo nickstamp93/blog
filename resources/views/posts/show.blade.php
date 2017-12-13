@@ -8,6 +8,8 @@
         <div class="col-md-8">
             <h1>{{ $post->title }}</h1>
 
+            <img class="img-fluid" src="{{ asset('images/' . $post->image) }}">
+
             <p>{!! $post->body !!}</p>
 
             <hr>

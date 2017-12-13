@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <form method="POST" action="{{ route('posts.update', $post->id) }}" data-parsley-validate>
+            <form method="POST" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" data-parsley-validate>
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <div class="form-group">
@@ -46,6 +46,10 @@
                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                         @endforeach
                     </select>
+                </div>
+                <div class="form-group">
+                    <label name="featured_image" for="featured_image">Featured Image:</label>
+                    <input type="file" class="form-control-file" id="featured_image" name="featured_image">
                 </div>
                 <div class="form-group">
                     <label for="body">Body:</label>

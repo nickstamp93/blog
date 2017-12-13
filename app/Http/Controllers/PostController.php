@@ -7,6 +7,7 @@ use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
@@ -61,6 +62,7 @@ class PostController extends Controller
             'title' => 'required|max:180',
             'category_id' => 'required|integer',
             'slug' => 'required|alpha_dash|min:5|max:180|unique:posts,slug',
+            'featured_image' => 'required|image|max:1024',
             'body' => 'required'
         ));
 
@@ -140,6 +142,7 @@ class PostController extends Controller
             'title' => 'required|max:180',
             'category_id' => 'required|integer',
             'slug' => 'required|alpha_dash|min:5|max:180|unique:posts,slug,' . $id,
+            'featured_image' => 'image',
             'body' => 'required'
         ));
 
@@ -149,6 +152,24 @@ class PostController extends Controller
         $post->slug = $request->input('slug');
         $post->category_id = $request->input('category_id');
         $post->body = $request->input('body');
+
+        if ($request->hasFile('featured_image')){
+            // add the new photo
+            $image = $request->file('featured_image');
+            $filename = time() . "." . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+
+            $oldFilename = $post->image;
+
+            // update database
+            Image::make($image)->save($location);
+
+            $post->image = $filename;
+
+            //delete old photo
+            Storage::delete($oldFilename);
+
+        }
 
         $post->save();
 
@@ -175,6 +196,8 @@ class PostController extends Controller
 
         // delete every post_tag row connecting this post with a tag
         $post->tags()->detach();
+
+        Storage::delete($post->image);
 
         // delete post
         $post->delete();
