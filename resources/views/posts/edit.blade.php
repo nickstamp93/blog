@@ -4,6 +4,14 @@
 
 @section('stylesheets')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "link code",
+            toolbar: 'undo redo | copy paste | bold italic alignleft aligncenter alignright outdent indent link code'
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -15,13 +23,13 @@
                 {{ method_field('PUT') }}
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <textarea type="text" class="form-control form-control-lg" id="title" name="title" rows="1"
-                              style="resize:none;">{{ $post->title }}</textarea>
+                    <input type="text" class="form-control form-control-lg" id="title" name="title" rows="1"
+                              style="resize:none;" value="{{ $post->title }}">
                 </div>
                 <div class="form-group">
                     <label for="slug">Url:</label>
-                    <textarea type="text" class="form-control form-control-lg" id="slug" name="slug" rows="1"
-                              style="resize:none;">{{ $post->slug }}</textarea>
+                    <input type="text" class="form-control form-control-lg" id="slug" name="slug" rows="1"
+                              style="resize:none;" value="{{ $post->slug }}">
                 </div>
                 <div class="form-group">
                     <label name="category_id">Category:</label>

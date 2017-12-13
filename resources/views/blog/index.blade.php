@@ -9,7 +9,7 @@
             <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
             <div class="card-body">
                 <h2 class="card-title">{{ $post->title }}</h2>
-                <p class="card-text">{{ substr($post->body,0,300) }} {{ strlen($post->body) > 300 ? "..." : "" }}</p>
+                <p class="card-text">{{ substr(strip_tags($post->body),0,300) }} {{ strlen(strip_tags($post->body)) > 300 ? "..." : "" }}</p>
                 <a href="{{ route('blog.single',$post->slug) }}" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">

@@ -8,7 +8,7 @@
         <div class="col-md-8">
             <h1>{{ $post->title }}</h1>
 
-            <p>{{ $post->body }}</p>
+            <p>{!! $post->body !!}</p>
 
             <hr>
             <div class="tags">
@@ -111,8 +111,7 @@
                                 <input type="submit" value="Delete" class="btn btn-danger btn-block">
                                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                             </form>
-
-                            {{--<a href="{{ route('posts.destroy', $post->id) }}" class="btn btn-danger btn-block">Delete</a>--}}
+                            <br>
                         </div>
                         <div class="col-sm-12">
                             <a href="{{ route('posts.index')}}" class="btn btn-secondary btn-block"><< All Posts</a>

@@ -12,13 +12,13 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item {{ Request::is('blog') ?  "active" : ""}}">
-                    <a class="nav-link" href="/blog">Blog</a>
+                    <a class="nav-link" href="{{ route('blog.index') }}">Blog</a>
                 </li>
                 <li class="nav-item {{ Request::is('about') ?  "active" : ""}}">
-                    <a class="nav-link" href="/about">About</a>
+                    <a class="nav-link" href="{{ route('about') }}">About</a>
                 </li>
                 <li class="nav-item {{ Request::is('contact') ?  "active" : ""}}">
-                    <a class="nav-link" href="/contact">Contact</a>
+                    <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                 </li>
                 <li class="nav-item dropdown navbar-right">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"

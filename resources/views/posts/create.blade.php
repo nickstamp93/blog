@@ -3,7 +3,15 @@
 @section('title', 'Create new post')
 
 @section('stylesheets')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "link code",
+            toolbar: 'undo redo | copy paste | bold italic alignleft aligncenter alignright outdent indent link code'
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -26,7 +34,7 @@
                     <select class="form-control" name="category_id">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
@@ -34,12 +42,12 @@
                     <select class="form-control tags-multi-select" name="tags[]" multiple="multiple">
                         @foreach($tags as $tag)
                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label name="body">Post Body:</label>
-                    <textarea id="body" name="body" rows="10" class="form-control" required></textarea>
+                    <textarea id="body" name="body" rows="10" class="form-control"></textarea>
                 </div>
                 <input type="submit" value="Create Post" class="btn btn-success btn-lg btn-block">
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
@@ -54,7 +62,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.tags-multi-select').select2();
         });
     </script>
