@@ -20,7 +20,7 @@
         <div class="col-md-8 offset-md-2">
             <h1>Create New Post</h1>
             <hr>
-            <form method="POST" action="{{ route('posts.store') }}">
+            <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                 <div class="form-group">
                     <label name="title">Title:</label>
                     <input id="title" name="title" class="form-control" required maxlength="180">
@@ -44,6 +44,10 @@
                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                         @endforeach
                     </select>
+                </div>
+                <div class="form-group">
+                    <label name="featured_image" for="featured_image">Featured Image:</label>
+                    <input type="file" class="form-control-file" id="featured_image" name="featured_image">
                 </div>
                 <div class="form-group">
                     <label name="body">Post Body:</label>
